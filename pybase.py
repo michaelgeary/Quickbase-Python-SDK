@@ -7,11 +7,11 @@ import re
 import string
 
 class QBConn:
-	def __init__(self,url,appid,token=None, user_token=None,realm=""): ## MG: added optional user_token parameter
+	def __init__(self,url,appid,token=None, user_token=None,realm=""):
 		
 		self.url = url
 		self.token = token
-		self.user_token = user_token ## MG: added instance variable for user_token
+		self.user_token = user_token
 		self.appid = appid
 		self.ticket = None
 		self.realm = realm	#This allows one QuickBase realm to proxy for another
@@ -20,7 +20,6 @@ class QBConn:
 
 	def authenticate(self,username=None,password=None):
 		
-		## MG: added this block to bypass actual authentication and ticket retrieval/storage
 		if self.user_token:
 			self.tables = self._getTables()
 			return
@@ -40,7 +39,6 @@ class QBConn:
 		url = self.url
 		url += url_ext
 		
-		## MG: added this conditional, for when we're using user_token instead of ticket
 		if self.user_token:
 			params['usertoken'] = self.user_token
 		else:
